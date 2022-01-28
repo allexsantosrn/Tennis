@@ -15,7 +15,7 @@ func player(nome string, turn chan int) {
 
 	fmt.Println("Teste:", teste)
 
-	
+	turn <- teste
 }
 
 func main() {
