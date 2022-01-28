@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"math/rand"
 	"time"
 )
 
@@ -28,4 +29,10 @@ func main() {
 	turn <- 1
 
 	time.Sleep(1e9)
+}
+
+func gerarNumeroAleatorio() int {
+
+	numeroAleatorio := rand.Intn(50)
+	return numeroAleatorio
 }
