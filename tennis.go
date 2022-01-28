@@ -10,11 +10,13 @@ var jogador1 = "Nadal"
 
 var jogador2 = "Federer"
 
-func player(nome string, turn chan int) {
+func jogador(nome string, turn chan int) {
 
 	teste := <-turn
 
-	fmt.Println("Teste:", teste)
+	num := gerarNumeroAleatorio()
+
+	fmt.Println("Teste:", num)
 
 	turn <- teste
 }
@@ -23,8 +25,8 @@ func main() {
 
 	turn := make(chan int)
 
-	go player(jogador1, turn)
-	go player(jogador2, turn)
+	go jogador(jogador1, turn)
+	go jogador(jogador2, turn)
 
 	turn <- 1
 
