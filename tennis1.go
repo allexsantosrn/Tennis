@@ -31,12 +31,10 @@ func jogador(nome string, turn chan int) {
 	defer wg.Done()
 
 	for {
-
 		posse, controle := <-turn
 
 		// Com o canal fechado, exibe o vencedor da partida.
 		if controle == false {
-
 			fmt.Printf("Jogador %s venceu a partida.", nome)
 			fmt.Print("\n")
 			return
@@ -46,14 +44,12 @@ func jogador(nome string, turn chan int) {
 		num := gerarNumeroAleatorio()
 
 		if num%7 == 0 {
-
 			// Exibe a mensagem de que o jogador não acertou a bola.
 			fmt.Printf("Jogador %s não acertou a bola (Jogada %d).", nome, posse)
 			fmt.Print("\n")
 
 			// Incrementa pontuação para o jogador 2, caso o jogador 1 não tenha acertado a bola.
 			if nome == jogador1 {
-
 				pontosj2++
 				fmt.Printf("Ponto para %s, totalizando %d ponto(s).", jogador2, pontosj2)
 				fmt.Print("\n \n")
@@ -62,7 +58,6 @@ func jogador(nome string, turn chan int) {
 
 				// Incrementa pontuação para o jogador 2, caso o jogador 1 não tenha acertado a bola.
 			} else {
-
 				pontosj1++
 				fmt.Printf("Ponto para %s, totalizando %d ponto(s).", jogador1, pontosj1)
 				fmt.Print("\n \n")
@@ -72,7 +67,6 @@ func jogador(nome string, turn chan int) {
 
 			// Encerra a partida caso alguns dos jogadores atinga o valor de pontuação limite.
 			if pontosj1 == pontosFixos || pontosj2 == pontosFixos {
-
 				fmt.Printf("Jogador %s perdeu a partida.", nome)
 				fmt.Print("\n")
 				close(turn)
@@ -83,7 +77,6 @@ func jogador(nome string, turn chan int) {
 			turn <- posse
 
 		} else {
-
 			// Exibe a mensagem de acerto na bola.
 			fmt.Printf("Jogador %s acertou a bola (Jogada %d).", nome, posse)
 			fmt.Print("\n")
@@ -133,7 +126,6 @@ func main() {
 
 // Gera um número inteiro aleatório até o limite de 50.
 func gerarNumeroAleatorio() int {
-
 	numeroAleatorio := rand.Intn(50)
 	return numeroAleatorio
 }

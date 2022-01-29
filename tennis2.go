@@ -210,6 +210,8 @@ func main() {
 		return
 	}
 
+	/* Recebe os valores repassados via argumento e seta o número de pontos por game,
+	número de sets por set e o número máximo de sets por partida.  */
 	pointsMaxPerGame, err1 := strconv.Atoi(os.Args[1])
 	gamesMaxPerSet, err2 := strconv.Atoi(os.Args[2])
 	setsMasxperMatch, err3 := strconv.Atoi(os.Args[3])
