@@ -98,6 +98,13 @@ func main() {
 
 	rand.Seed(time.Now().UnixNano())
 
+	args := os.Args[1:]
+
+	if len(args) < 1 {
+		fmt.Println("[ERROR] Por favor, informe um valor máximo de pontos.")
+		return
+	}
+
 	// Recebe via argumento o número máximo de pontos para vitória.
 	pointsMax, err1 := strconv.Atoi(os.Args[1])
 

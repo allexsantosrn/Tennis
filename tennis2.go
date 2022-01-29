@@ -3,16 +3,22 @@ package main
 import (
 	"fmt"
 	"math/rand"
+	"os"
+	"strconv"
 	"sync"
 	"time"
 )
 
+// Define o limite de sets em uma partida.
 var numMaxSets = 5
 
+// Define o número de sets mínimo para garantir a vitória.
 var numSets = 3
 
+// Define o limite de games para vencer um set.
 var numGames = 6
 
+// Define o número de pontos para vencer um game.
 var pointsPerGames = 4
 
 // Jogador 1
@@ -192,15 +198,28 @@ func jogador(nome string, turn chan int) {
 func main() {
 	rand.Seed(time.Now().UnixNano())
 
-	//pointsMax, err1 := strconv.Atoi(os.Args[1])
+	args := os.Args[1:]
 
-	/*if err1 != nil {
+	if len(args) < 3 {
+		fmt.Println("[ERROR] Por favor, informe corretamente os três parâmetros necessários.")
+		return
+	}
+
+	pointsMaxPerGame, err1 := strconv.Atoi(os.Args[1])
+	gamesMaxPerSet, err2 := strconv.Atoi(os.Args[2])
+	setsMasxperMatch, err3 := strconv.Atoi(os.Args[3])
+
+	if err1 != nil || err2 != nil || err3 != nil {
 		fmt.Println("Erro!!")
 		return
 	}
 
-	// Atribui o valor passado via argumento como pontuação máxima para vitória.
-	pontosFixos = pointsMax */
+	// Atribui o valor passado via argumento como pontuação máxima por game.
+	pointsPerGames = pointsMaxPerGame
+
+	numMaxSets = setsMasxperMatch
+
+	numGames = gamesMaxPerSet
 
 	// Com o canal fechado, exibe o vencedor da partida.
 	turn := make(chan int)
