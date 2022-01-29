@@ -3,11 +3,13 @@ package main
 import (
 	"fmt"
 	"math/rand"
+	"os"
+	"strconv"
 	"time"
 )
 
 // Representa o número de pontos máximos que identificará o vencedor da partida.
-var pontosFixos = 5
+var pontosFixos = 0
 
 // Jogador 1
 var jogador1 = "Nadal"
@@ -61,7 +63,7 @@ func jogador(nome string, turn chan int) {
 				fmt.Print("\n \n")
 			}
 
-			// Encerra a partida caso alguns dos jogadores atinga o valor limite.
+			// Encerra a partida caso alguns dos jogadores atinga o valor de pontuação limite.
 			if pontosj1 == pontosFixos || pontosj2 == pontosFixos {
 				fmt.Printf("Jogador %s perdeu a partida.", nome)
 				fmt.Print("\n")
@@ -69,19 +71,33 @@ func jogador(nome string, turn chan int) {
 				return
 			}
 
+			posse++
+			turn <- posse
+
+		} else {
+
+			fmt.Printf("Jogador %s acertou a bola (Jogada %d).", nome, posse)
+			fmt.Print("\n")
+
+			posse++
+			turn <- posse
 		}
-
-		fmt.Printf("Jogador %s acertou a bola (Jogada %d).", nome, posse)
-		fmt.Print("\n")
-
-		posse++
-		turn <- posse
 	}
 }
 
 func main() {
 
 	rand.Seed(time.Now().UnixNano())
+
+	pointsMax, err1 := strconv.Atoi(os.Args[1])
+
+	if err1 != nil {
+		fmt.Println("Erro!!")
+		return
+	}
+
+	// Atribui o valor passado via argumento como pontuação máxima para vitória.
+	pontosFixos = pointsMax
 
 	turn := make(chan int)
 
