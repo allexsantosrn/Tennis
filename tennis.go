@@ -12,13 +12,30 @@ var jogador2 = "Federer"
 
 func jogador(nome string, turn chan int) {
 
-	teste := <-turn
+	posse, controle := <-turn
+
+	if controle == false {
+		fmt.Printf("Jogador %s venceu a partida.", nome)
+		fmt.Print("\n")
+		return
+	}
 
 	num := gerarNumeroAleatorio()
 
-	fmt.Println("Teste:", num)
+	if num%5 == 7 {
 
-	turn <- teste
+		fmt.Printf("Jogador %s não acertou a bola (Jogada %d).", nome, posse)
+		fmt.Print("\n")
+
+		close(turn)
+		return
+	}
+
+	fmt.Printf("Jogador %s acertou a bola (Jogada %d).", nome, posse)
+	fmt.Print("\n")
+
+	posse++
+	turn <- posse
 }
 
 func main() {
