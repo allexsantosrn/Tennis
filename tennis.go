@@ -5,6 +5,7 @@ import (
 	"math/rand"
 	"os"
 	"strconv"
+	"sync"
 	"time"
 )
 
@@ -23,7 +24,11 @@ var jogador2 = "Federer"
 // Representa o número de pontos do jogador 2.
 var pontosj2 = 0
 
+var wg sync.WaitGroup
+
 func jogador(nome string, turn chan int) {
+
+	defer wg.Done()
 
 	for {
 
@@ -101,13 +106,16 @@ func main() {
 
 	turn := make(chan int)
 
+	wg.Add(2)
+
 	go jogador(jogador1, turn)
 	go jogador(jogador2, turn)
 
 	// Iniciando na jogada um.
 	turn <- 1
 
-	time.Sleep(1e9)
+	//time.Sleep(1e9)
+	wg.Wait()
 }
 
 // Gera um número inteiro aleatório até o limite de 50.
