@@ -7,6 +7,8 @@ import (
 	"time"
 )
 
+var numMaxSets = 5
+
 var numSets = 3
 
 var numGames = 6
@@ -57,8 +59,9 @@ func jogador(nome string, turn chan int) {
 		// Gera um número aleatório que auxilia no processo de não acerto da bola.
 		num := gerarNumeroAleatorio()
 
-		if num%7 == 0 {
+		if num%17 == 0 {
 
+			// Exibe a mensagem de que o jogador não acertou a bola.
 			fmt.Printf("Jogador %s não acertou a bola (Jogada %d).", nome, posse)
 			fmt.Print("\n")
 
@@ -82,69 +85,100 @@ func jogador(nome string, turn chan int) {
 			}
 
 			// Encerra o game caso alguns dos jogadores atinga o valor de pontuação limite.
-			if pontosGame1 == pointsPerGames {
+			if pontosGame1 >= pointsPerGames {
 
-				numeroGames1++
-				fmt.Printf("Jogador %s venceu o game.", jogador1)
-				fmt.Print("\n \n")
-				fmt.Printf("Placar atual no set - %s: %d x %d: %s", jogador1, numeroGames1, numeroGames2, jogador2)
-				fmt.Print("\n \n")
-				pontosGame1 = 0
+				if pontosGame1-pontosGame2 >= 2 {
+					numeroGames1++
+					fmt.Printf("Jogador %s venceu o game.", jogador1)
+					fmt.Print("\n \n")
+					fmt.Printf("Placar atual no set - %s: %d x %d: %s", jogador1, numeroGames1, numeroGames2, jogador2)
+					fmt.Print("\n \n")
+					pontosGame1 = 0
+					pontosGame2 = 0
+				}
 			}
 
-			if pontosGame2 == pointsPerGames {
+			if pontosGame2 >= pointsPerGames {
 
-				numeroGames2++
-				fmt.Printf("Jogador %s venceu o game.", jogador2)
-				fmt.Print("\n \n")
-				fmt.Printf("Placar atual no set - %s: %d x %d: %s", jogador1, numeroGames1, numeroGames2, jogador2)
-				fmt.Print("\n \n")
-				pontosGame2 = 0
+				if pontosGame2-pontosGame1 >= 2 {
+					numeroGames2++
+					fmt.Printf("Jogador %s venceu o game.", jogador2)
+					fmt.Print("\n \n")
+					fmt.Printf("Placar atual no set - %s: %d x %d: %s", jogador1, numeroGames1, numeroGames2, jogador2)
+					fmt.Print("\n \n")
+					pontosGame2 = 0
+					pontosGame1 = 0
+				}
 			}
 
-			if numeroGames1 == numGames {
+			if numeroGames1 >= numGames {
 
-				numeroSet1++
-				fmt.Printf("Jogador %s venceu o set.", jogador1)
-				fmt.Print("\n \n")
-				fmt.Printf("Placar parcial em sets - %s: %d x %d: %s", jogador1, numeroSet1, numeroSet2, jogador2)
-				fmt.Print("\n \n")
-				numeroGames1 = 0
+				if numeroGames1-numeroGames2 >= 2 {
+					numeroSet1++
+					fmt.Printf("Jogador %s venceu o set.", jogador1)
+					fmt.Print("\n \n")
+					fmt.Printf("Placar parcial em sets - %s: %d x %d: %s", jogador1, numeroSet1, numeroSet2, jogador2)
+					fmt.Print("\n \n")
+					numeroGames1 = 0
+					numeroGames2 = 0
+				}
 			}
 
-			if numeroGames2 == numGames {
+			if numeroGames2 >= numGames {
 
-				numeroSet2++
-				fmt.Printf("Jogador %s venceu o set.", jogador2)
-				fmt.Print("\n \n")
-				fmt.Printf("Placar parcial em sets - %s: %d x %d: %s", jogador1, numeroSet1, numeroSet2, jogador2)
-				fmt.Print("\n \n")
-				numeroGames2 = 0
+				if numeroGames2-numeroGames1 >= 2 {
+					numeroSet2++
+					fmt.Printf("Jogador %s venceu o set.", jogador2)
+					fmt.Print("\n \n")
+					fmt.Printf("Placar parcial em sets - %s: %d x %d: %s", jogador1, numeroSet1, numeroSet2, jogador2)
+					fmt.Print("\n \n")
+					numeroGames2 = 0
+					numeroGames1 = 0
+				}
 			}
 
-			if numeroSet1 == numSets {
+			if numeroSet1 >= numSets {
 
-				fmt.Printf("Jogador %s perdeu a partida.", jogador2)
-				fmt.Print("\n")
+				if numeroSet1-numeroSet2 >= 2 {
+					fmt.Printf("Jogador %s perdeu a partida.", jogador2)
+					fmt.Print("\n")
 
-				close(turn)
-				return
+					close(turn)
+					return
+				}
+
+				if numeroSet1 == numMaxSets {
+					fmt.Printf("Jogador %s perdeu a partida.", jogador2)
+					fmt.Print("\n")
+
+					close(turn)
+					return
+				}
+
 			}
 
-			if numeroSet2 == numSets {
+			if numeroSet2 >= numSets {
+				if numeroSet2-numeroSet1 >= 2 {
+					fmt.Printf("Jogador %s perdeu a partida.", jogador1)
+					fmt.Print("\n")
 
-				fmt.Printf("Jogador %s perdeu a partida.", jogador1)
-				fmt.Print("\n")
+					close(turn)
+					return
+				}
 
-				close(turn)
-				return
+				if numeroSet2 == numMaxSets {
+					fmt.Printf("Jogador %s perdeu a partida.", jogador2)
+					fmt.Print("\n")
+
+					close(turn)
+					return
+				}
 			}
 
 			posse++
 			turn <- posse
 
 		} else {
-
 			// Exibe a mensagem de acerto na bola.
 			fmt.Printf("Jogador %s acertou a bola (Jogada %d).", nome, posse)
 			fmt.Print("\n")
@@ -156,7 +190,6 @@ func jogador(nome string, turn chan int) {
 }
 
 func main() {
-
 	rand.Seed(time.Now().UnixNano())
 
 	//pointsMax, err1 := strconv.Atoi(os.Args[1])
@@ -169,6 +202,7 @@ func main() {
 	// Atribui o valor passado via argumento como pontuação máxima para vitória.
 	pontosFixos = pointsMax */
 
+	// Com o canal fechado, exibe o vencedor da partida.
 	turn := make(chan int)
 
 	wg.Add(2)
@@ -185,7 +219,6 @@ func main() {
 
 // Gera um número inteiro aleatório até o limite de 50.
 func gerarNumeroAleatorio() int {
-
 	numeroAleatorio := rand.Intn(50)
 	return numeroAleatorio
 }

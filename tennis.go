@@ -36,6 +36,7 @@ func jogador(nome string, turn chan int) {
 
 		// Com o canal fechado, exibe o vencedor da partida.
 		if controle == false {
+
 			fmt.Printf("Jogador %s venceu a partida.", nome)
 			fmt.Print("\n")
 			return
@@ -46,6 +47,7 @@ func jogador(nome string, turn chan int) {
 
 		if num%7 == 0 {
 
+			// Exibe a mensagem de que o jogador não acertou a bola.
 			fmt.Printf("Jogador %s não acertou a bola (Jogada %d).", nome, posse)
 			fmt.Print("\n")
 
@@ -70,6 +72,7 @@ func jogador(nome string, turn chan int) {
 
 			// Encerra a partida caso alguns dos jogadores atinga o valor de pontuação limite.
 			if pontosj1 == pontosFixos || pontosj2 == pontosFixos {
+
 				fmt.Printf("Jogador %s perdeu a partida.", nome)
 				fmt.Print("\n")
 				close(turn)
@@ -95,16 +98,18 @@ func main() {
 
 	rand.Seed(time.Now().UnixNano())
 
+	// Recebe via argumento o número máximo de pontos para vitória.
 	pointsMax, err1 := strconv.Atoi(os.Args[1])
 
 	if err1 != nil {
-		fmt.Println("Erro!!")
+		fmt.Println("Error!!")
 		return
 	}
 
 	// Atribui o valor passado via argumento como pontuação máxima para vitória.
 	pontosFixos = pointsMax
 
+	// Criando a channel
 	turn := make(chan int)
 
 	wg.Add(2)
