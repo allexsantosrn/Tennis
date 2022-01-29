@@ -101,7 +101,7 @@ func main() {
 	args := os.Args[1:]
 
 	if len(args) < 1 {
-		fmt.Println("[ERROR] Por favor, informe um valor máximo de pontos.")
+		fmt.Println("[ERRO]!!! Por favor, informe um valor máximo de pontos.")
 		return
 	}
 
@@ -109,7 +109,7 @@ func main() {
 	pointsMax, err1 := strconv.Atoi(os.Args[1])
 
 	if err1 != nil {
-		fmt.Println("Error!!")
+		fmt.Println("[ERRO]!!")
 		return
 	}
 

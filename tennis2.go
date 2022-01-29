@@ -9,7 +9,7 @@ import (
 	"time"
 )
 
-// Define o limite de sets em uma partida.
+// Define o limite máximo de sets em uma partida.
 var numMaxSets = 5
 
 // Define o número de sets mínimo para garantir a vitória.
@@ -73,7 +73,6 @@ func jogador(nome string, turn chan int) {
 
 			// Incrementa pontuação para o jogador 2, caso o jogador 1 não tenha acertado a bola.
 			if nome == jogador1 {
-
 				pontosGame2++
 				fmt.Printf("Ponto para %s, totalizando %d ponto(s) no game.", jogador2, pontosGame2)
 				fmt.Print("\n \n")
@@ -82,7 +81,6 @@ func jogador(nome string, turn chan int) {
 
 				// Incrementa pontuação para o jogador 2, caso o jogador 1 não tenha acertado a bola.
 			} else {
-
 				pontosGame1++
 				fmt.Printf("Ponto para %s, totalizando %d ponto(s) no game.", jogador1, pontosGame1)
 				fmt.Print("\n \n")
@@ -90,9 +88,8 @@ func jogador(nome string, turn chan int) {
 				fmt.Print("\n \n")
 			}
 
-			// Encerra o game caso alguns dos jogadores atinga o valor de pontuação limite.
+			// Encerra o game caso o jogador 1 atinja o valor de pontuação limite.
 			if pontosGame1 >= pointsPerGames {
-
 				if pontosGame1-pontosGame2 >= 2 {
 					numeroGames1++
 					fmt.Printf("Jogador %s venceu o game.", jogador1)
@@ -104,8 +101,8 @@ func jogador(nome string, turn chan int) {
 				}
 			}
 
+			// Encerra o game caso o jogador 2 atinja o valor de pontuação limite.
 			if pontosGame2 >= pointsPerGames {
-
 				if pontosGame2-pontosGame1 >= 2 {
 					numeroGames2++
 					fmt.Printf("Jogador %s venceu o game.", jogador2)
@@ -117,8 +114,8 @@ func jogador(nome string, turn chan int) {
 				}
 			}
 
+			// Encerra o set caso o jogador 1 atinga o valor de games necessários.
 			if numeroGames1 >= numGames {
-
 				if numeroGames1-numeroGames2 >= 2 {
 					numeroSet1++
 					fmt.Printf("Jogador %s venceu o set.", jogador1)
@@ -130,8 +127,8 @@ func jogador(nome string, turn chan int) {
 				}
 			}
 
+			// Encerra o set caso o jogador 1 atinga o valor de games necessários.
 			if numeroGames2 >= numGames {
-
 				if numeroGames2-numeroGames1 >= 2 {
 					numeroSet2++
 					fmt.Printf("Jogador %s venceu o set.", jogador2)
@@ -143,9 +140,11 @@ func jogador(nome string, turn chan int) {
 				}
 			}
 
+			//Encerra a partida caso o jogador 1 atinga o valor de sets necessários.
 			if numeroSet1 >= numSets {
-
 				if numeroSet1-numeroSet2 >= 2 {
+					fmt.Printf("Match point!!!!!!!!!!!!!!!!!")
+					fmt.Print("\n")
 					fmt.Printf("Jogador %s perdeu a partida.", jogador2)
 					fmt.Print("\n")
 
@@ -154,6 +153,7 @@ func jogador(nome string, turn chan int) {
 				}
 
 				if numeroSet1 == numMaxSets {
+					fmt.Printf("Match point!!!!!!!!!!!!!!!!!")
 					fmt.Printf("Jogador %s perdeu a partida.", jogador2)
 					fmt.Print("\n")
 
@@ -163,8 +163,11 @@ func jogador(nome string, turn chan int) {
 
 			}
 
+			//Encerra a partida caso o jogador 2 atinga o valor de sets necessários.
 			if numeroSet2 >= numSets {
 				if numeroSet2-numeroSet1 >= 2 {
+					fmt.Printf("Match point!!!!!!!!!!!!!!!!!")
+					fmt.Print("\n")
 					fmt.Printf("Jogador %s perdeu a partida.", jogador1)
 					fmt.Print("\n")
 
@@ -173,6 +176,8 @@ func jogador(nome string, turn chan int) {
 				}
 
 				if numeroSet2 == numMaxSets {
+					fmt.Printf("Match point!!!!!!!!!!!!!!!!!")
+					fmt.Print("\n")
 					fmt.Printf("Jogador %s perdeu a partida.", jogador2)
 					fmt.Print("\n")
 
@@ -201,7 +206,7 @@ func main() {
 	args := os.Args[1:]
 
 	if len(args) < 3 {
-		fmt.Println("[ERROR] Por favor, informe corretamente os três parâmetros necessários.")
+		fmt.Println("[ERRO]!!! Por favor, informe corretamente os três parâmetros necessários.")
 		return
 	}
 
@@ -210,18 +215,20 @@ func main() {
 	setsMasxperMatch, err3 := strconv.Atoi(os.Args[3])
 
 	if err1 != nil || err2 != nil || err3 != nil {
-		fmt.Println("Erro!!")
+		fmt.Println("[ERRO]!!")
 		return
 	}
 
 	// Atribui o valor passado via argumento como pontuação máxima por game.
 	pointsPerGames = pointsMaxPerGame
 
+	// Atribui o valor passado via argumento como valor máximo de sets.
 	numMaxSets = setsMasxperMatch
 
+	// Atribui o valor passado via argumento como valor máximo de games para vencer um set.
 	numGames = gamesMaxPerSet
 
-	// Com o canal fechado, exibe o vencedor da partida.
+	// Criando a channel
 	turn := make(chan int)
 
 	wg.Add(2)
