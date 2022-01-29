@@ -81,6 +81,7 @@ func jogador(nome string, turn chan int) {
 
 		} else {
 
+			// Exibe a mensagem de acerto na bola.
 			fmt.Printf("Jogador %s acertou a bola (Jogada %d).", nome, posse)
 			fmt.Print("\n")
 
@@ -108,13 +109,13 @@ func main() {
 
 	wg.Add(2)
 
+	// Goroutines para os dois jogadores.const
 	go jogador(jogador1, turn)
 	go jogador(jogador2, turn)
 
 	// Iniciando na jogada um.
 	turn <- 1
 
-	//time.Sleep(1e9)
 	wg.Wait()
 }
 
