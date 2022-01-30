@@ -43,6 +43,8 @@ func jogador(nome string, turn chan int) {
 		// Gera um número aleatório que auxilia no processo de não acerto da bola.
 		num := gerarNumeroAleatorio()
 
+		// Da faixa de valor aleatório gerado (até 50), verifica se o número gerado é divisível por 7.
+		// Caso seja divisível, significa que o jogador não acertou a bola.
 		if num%7 == 0 {
 			// Exibe a mensagem de que o jogador não acertou a bola.
 			fmt.Printf("Jogador %s não acertou a bola (Jogada %d).", nome, posse)
@@ -67,12 +69,16 @@ func jogador(nome string, turn chan int) {
 
 			// Encerra a partida caso alguns dos jogadores atinga o valor de pontuação limite.
 			if pontosj1 == pontosFixos || pontosj2 == pontosFixos {
+				fmt.Printf("Match Point!!!!!!")
+				fmt.Print("\n \n")
 				fmt.Printf("Jogador %s perdeu a partida.", nome)
 				fmt.Print("\n")
 				close(turn)
 				return
 			}
 
+			// Incrementa o número de posse de bolas.
+			// Repassa a posse para o outro jogador.
 			posse++
 			turn <- posse
 
@@ -94,7 +100,7 @@ func main() {
 	args := os.Args[1:]
 
 	if len(args) < 1 {
-		fmt.Println("[ERRO]!!! Por favor, informe um valor máximo de pontos.")
+		fmt.Println("[ERRO]!!! Por favor, informe um valor máximo de pontuação para o vencedor.")
 		return
 	}
 
