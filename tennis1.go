@@ -31,6 +31,9 @@ func jogador(nome string, turn chan int) {
 	defer wg.Done()
 
 	for {
+
+		//time.Sleep(1 * time.Second)
+
 		posse, controle := <-turn
 
 		// Com o canal fechado, exibe o vencedor da partida.

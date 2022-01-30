@@ -19,5 +19,6 @@ Já no segundo arquivo temos o projeto executado com sua versão extra/avançada
 ## Informações complementares
 - Na primeira versão, temos a implementação de uma partida de tênis simples, onde vence a partida o jogador que alcançar primeiro a pontuação limite estabelecida. Neste caso, admite-se que a partida tem um único set, com apenas um game, onde é declarado vencedor o jogador que atinge a pontuação limite estabelecida.
 - Já na segunda versão, temos a implementação de um jogo mais complexo de tenis. Neste cenário é possível definir o número de pontuações para se vencer um game, o número de games para se vencer um set, e o número de sets máximos permitidos em uma partida de tenis. Para vencer cada game é necessário ter dois pontos de vantagem para o vencedor. O mesmo pode ser dito para se vencer um set (A partida não contém as regras específicas para tie-break). Neste ponto, é necessária a vantagem de dois games para se vencer um set. É declarado vencedor o jogador que atingir a marca de 3 sets conquistados, contanto que haja vantagem de dois sets para este vencedor.
+- Em ambas as versões existe o trecho de código: *time.Sleep(1 * time.Second)* que pode ser descomentado para se enxergar a partida de forma mais lenta. 
 
 

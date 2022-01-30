@@ -12,7 +12,7 @@ import (
 // Define o limite máximo de sets em uma partida.
 var numMaxSets = 5
 
-// Define o número de sets mínimo para garantir a vitória.
+// Define o número de sets mínimo para garantir uma vitória.
 var numSets = 3
 
 // Define o limite de games para vencer um set.
@@ -53,7 +53,9 @@ func jogador(nome string, turn chan int) {
 
 	for {
 
-		posse, controle := <-turn
+		//time.Sleep(1 * time.Second)
+
+		posse, controle := <-turn //
 
 		// Com o canal fechado, exibe o vencedor da partida.
 		if controle == false {
@@ -65,8 +67,9 @@ func jogador(nome string, turn chan int) {
 		// Gera um número aleatório que auxilia no processo de não acerto da bola.
 		num := gerarNumeroAleatorio()
 
-		if num%17 == 0 {
-
+		// Da faixa de valor aleatório gerado (até 50), verifica se o número gerado é divisível por 7.
+		// Caso seja divisível, significa que o jogador não acertou a bola.
+		if num%7 == 0 {
 			// Exibe a mensagem de que o jogador não acertou a bola.
 			fmt.Printf("Jogador %s não acertou a bola (Jogada %d).", nome, posse)
 			fmt.Print("\n")
@@ -194,6 +197,8 @@ func jogador(nome string, turn chan int) {
 			fmt.Printf("Jogador %s acertou a bola (Jogada %d).", nome, posse)
 			fmt.Print("\n")
 
+			// Incrementa o número de posse de bolas.
+			// Repassa a posse para o outro jogador.
 			posse++
 			turn <- posse
 		}
@@ -201,6 +206,7 @@ func jogador(nome string, turn chan int) {
 }
 
 func main() {
+
 	rand.Seed(time.Now().UnixNano())
 
 	args := os.Args[1:]
