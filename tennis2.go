@@ -76,7 +76,7 @@ func jogador(nome string, turn chan int) {
 
 			// Incrementa pontuação para o jogador 2, caso o jogador 1 não tenha acertado a bola.
 			if nome == jogador1 {
-				pontosGame2++
+				pontosGame2++ // Incrementa a pontuação do jogador 2 no game.
 				fmt.Printf("Ponto para %s, totalizando %d ponto(s) no game.", jogador2, pontosGame2)
 				fmt.Print("\n \n")
 				fmt.Printf("Placar atual no game - %s: %d x %d: %s", jogador1, pontosGame1, pontosGame2, jogador2)
@@ -84,7 +84,7 @@ func jogador(nome string, turn chan int) {
 
 				// Incrementa pontuação para o jogador 2, caso o jogador 1 não tenha acertado a bola.
 			} else {
-				pontosGame1++
+				pontosGame1++ // Incrementa a pontuação do jogador 2 no game.
 				fmt.Printf("Ponto para %s, totalizando %d ponto(s) no game.", jogador1, pontosGame1)
 				fmt.Print("\n \n")
 				fmt.Printf("Placar atual no game  - %s: %d x %d: %s", jogador1, pontosGame1, pontosGame2, jogador2)
@@ -94,7 +94,7 @@ func jogador(nome string, turn chan int) {
 			// Encerra o game caso o jogador 1 atinja o valor de pontuação limite.
 			if pontosGame1 >= pointsPerGames {
 				if pontosGame1-pontosGame2 >= 2 {
-					numeroGames1++
+					numeroGames1++ // Incrementa a pontuação do jogador 1 em games.
 					fmt.Printf("Jogador %s venceu o game.", jogador1)
 					fmt.Print("\n \n")
 					fmt.Printf("Placar atual no set - %s: %d x %d: %s", jogador1, numeroGames1, numeroGames2, jogador2)
@@ -107,7 +107,7 @@ func jogador(nome string, turn chan int) {
 			// Encerra o game caso o jogador 2 atinja o valor de pontuação limite.
 			if pontosGame2 >= pointsPerGames {
 				if pontosGame2-pontosGame1 >= 2 {
-					numeroGames2++
+					numeroGames2++ // Incrementa a pontuação do jogador 2 em games.
 					fmt.Printf("Jogador %s venceu o game.", jogador2)
 					fmt.Print("\n \n")
 					fmt.Printf("Placar atual no set - %s: %d x %d: %s", jogador1, numeroGames1, numeroGames2, jogador2)
@@ -120,7 +120,7 @@ func jogador(nome string, turn chan int) {
 			// Encerra o set caso o jogador 1 atinga o valor de games necessários.
 			if numeroGames1 >= numGames {
 				if numeroGames1-numeroGames2 >= 2 {
-					numeroSet1++
+					numeroSet1++ // Incrementa a pontuação do jogador 1 em sets.
 					fmt.Printf("Jogador %s venceu o set.", jogador1)
 					fmt.Print("\n \n")
 					fmt.Printf("Placar parcial em sets - %s: %d x %d: %s", jogador1, numeroSet1, numeroSet2, jogador2)
@@ -133,7 +133,7 @@ func jogador(nome string, turn chan int) {
 			// Encerra o set caso o jogador 1 atinga o valor de games necessários.
 			if numeroGames2 >= numGames {
 				if numeroGames2-numeroGames1 >= 2 {
-					numeroSet2++
+					numeroSet2++ // Incrementa a pontuação do jogador 2 em sets.
 					fmt.Printf("Jogador %s venceu o set.", jogador2)
 					fmt.Print("\n \n")
 					fmt.Printf("Placar parcial em sets - %s: %d x %d: %s", jogador1, numeroSet1, numeroSet2, jogador2)
@@ -145,9 +145,9 @@ func jogador(nome string, turn chan int) {
 
 			//Encerra a partida caso o jogador 1 atinga o valor de sets necessários.
 			if numeroSet1 >= numSets {
-				if numeroSet1-numeroSet2 >= 2 {
+				if numeroSet1-numeroSet2 >= 2 { // Verifica se a diferença de sets em favor do jogador 1 é maior ou igual a 2.
 					fmt.Printf("Match point!!!!!!!!!!!!!!!!!")
-					fmt.Print("\n")
+					fmt.Print("\n \n")
 					fmt.Printf("Jogador %s perdeu a partida.", jogador2)
 					fmt.Print("\n")
 
@@ -155,8 +155,9 @@ func jogador(nome string, turn chan int) {
 					return
 				}
 
-				if numeroSet1 == numMaxSets {
+				if (numeroSet1 + numeroSet2) == numMaxSets { // Encerra a partida caso o valor máximo em sets seja atingido.
 					fmt.Printf("Match point!!!!!!!!!!!!!!!!!")
+					fmt.Print("\n \n")
 					fmt.Printf("Jogador %s perdeu a partida.", jogador2)
 					fmt.Print("\n")
 
@@ -168,9 +169,9 @@ func jogador(nome string, turn chan int) {
 
 			//Encerra a partida caso o jogador 2 atinga o valor de sets necessários.
 			if numeroSet2 >= numSets {
-				if numeroSet2-numeroSet1 >= 2 {
+				if numeroSet2-numeroSet1 >= 2 { // Verifica se a diferença de sets em favor do jogador 2 é maior ou igual a 2.
 					fmt.Printf("Match point!!!!!!!!!!!!!!!!!")
-					fmt.Print("\n")
+					fmt.Print("\n \n")
 					fmt.Printf("Jogador %s perdeu a partida.", jogador1)
 					fmt.Print("\n")
 
@@ -178,9 +179,9 @@ func jogador(nome string, turn chan int) {
 					return
 				}
 
-				if numeroSet2 == numMaxSets {
+				if (numeroSet1 + numeroSet2) == numMaxSets { // Encerra a partida caso o valor máximo em sets seja atingido.
 					fmt.Printf("Match point!!!!!!!!!!!!!!!!!")
-					fmt.Print("\n")
+					fmt.Print("\n \n")
 					fmt.Printf("Jogador %s perdeu a partida.", jogador2)
 					fmt.Print("\n")
 
