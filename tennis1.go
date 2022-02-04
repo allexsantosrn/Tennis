@@ -103,7 +103,7 @@ func main() {
 	args := os.Args[1:]
 
 	if len(args) < 1 {
-		fmt.Println("[ERRO]!!! Por favor, informe um valor máximo de pontuação para o vencedor.")
+		fmt.Println("[ERRO]!!! Por favor, informe um valor máximo de pontuação para o vencedor da partida.")
 		return
 	}
 
